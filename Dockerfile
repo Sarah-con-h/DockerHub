@@ -2,18 +2,17 @@ FROM python:3.12-slim
 
 WORKDIR /home/myapp
 
-# 1. Actualizar librerías del sistema base (corrige CVE-2026-14456 en OpenSSL)
+# Actualizar paquetes del sistema
 RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
 
-# 2. Desinstalar versiones vulnerables previas e instalar las seguras desde cero
-RUN pip uninstall -y setuptools msgpack \
-    && pip install --no-cache-dir --upgrade pip "setuptools>=78.1.1" "msgpack>=1.2.1"
+# Limpiar instalaciones previas e instalar dependencias actualizadas ignorando paquetes del sistema base
+RUN pip install --no-cache-dir --upgrade --ignore-installed pip "setuptools>=78.1.1" "msgpack>=1.2.1"
 
-# 3. Copiar e instalar dependencias del proyecto
+# Copiar e instalar requerimientos del proyecto
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 4. Copiar el código del proyecto
+# Copiar el codigo fuente
 COPY . .
 
 EXPOSE 5050
