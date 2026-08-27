@@ -53,6 +53,11 @@ jobs:
           no-cache: true
           tags: sarahconh16/cristian:latest
 
+      - name: Verificar versiones Python
+        run: |
+          docker run --rm sarahconh16/cristian:latest \
+            python -c "import importlib.metadata as m; print('msgpack:', m.version('msgpack')); print('setuptools:', m.version('setuptools'))"
+
       - name: Escanear contenedor con Trivy
         uses: aquasecurity/trivy-action@master
         with:
@@ -73,7 +78,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: docker-compose.yml
-          target: ~/DockerFlaskDesplegado  
+          target: ~/DockerFlaskDesplegado
 
       - name: Desplegar en el servidor cloud
         uses: appleboy/ssh-action@v1.0.3

@@ -6,10 +6,10 @@ RUN apt-get update \
     && apt-get upgrade -y \
     && rm -rf /var/lib/apt/lists/*
 
-RUN python -m pip install --no-cache-dir --upgrade \
-    pip \
-    "setuptools>=78.1.1" \
-    "msgpack>=1.2.1"
+RUN python -m pip install --no-cache-dir --upgrade pip \
+    && python -m pip install --no-cache-dir --force-reinstall \
+       "setuptools>=78.1.1" \
+       "msgpack>=1.2.1"
 
 COPY requirements.txt .
 
