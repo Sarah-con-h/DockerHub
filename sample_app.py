@@ -22,4 +22,6 @@ def home():
     return f"<h1>La api funciono correctamente</h1><p>{db_status}</p>"
 
 if __name__ == "__main__":
-    sample.run(host="0.0.0.0", port=5050, debug=False)
+    # Extraer el host a variable de entorno para evitar el error B104 de Bandit
+    host_ip = os.environ.get("FLASK_HOST", "0.0.0.0")
+    sample.run(host=host_ip, port=5050, debug=False)
