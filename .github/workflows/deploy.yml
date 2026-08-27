@@ -53,11 +53,6 @@ jobs:
           no-cache: true
           tags: sarahconh16/cristian:latest
 
-      - name: Verificar versiones Python
-        run: |
-          docker run --rm sarahconh16/cristian:latest \
-            python -c "import importlib.metadata as m; print('msgpack:', m.version('msgpack')); print('setuptools:', m.version('setuptools'))"
-
       - name: Escanear contenedor con Trivy
         uses: aquasecurity/trivy-action@master
         with:
