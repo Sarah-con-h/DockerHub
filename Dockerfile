@@ -9,10 +9,17 @@ RUN apt-get update \
 COPY requirements.txt .
 
 RUN python -m pip install --no-cache-dir --upgrade \
-        pip \
         "setuptools>=78.1.1" \
         "msgpack>=1.2.1" \
-    && python -m pip install --no-cache-dir -r requirements.txt
+    && python -m pip install --no-cache-dir -r requirements.txt \
+    && python -m pip uninstall -y pip setuptools msgpack \
+    && rm -rf \
+        /usr/local/lib/python3.12/ensurepip \
+        /usr/local/lib/python3.12/site-packages/pip \
+        /usr/local/lib/python3.12/site-packages/pip-*.dist-info \
+        /usr/local/lib/python3.12/site-packages/setuptools \
+        /usr/local/lib/python3.12/site-packages/setuptools-*.dist-info \
+        /root/.cache
 
 COPY . .
 

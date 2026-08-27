@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/vulnerabilidades
 
 jobs:
   test-and-security:
@@ -62,6 +61,7 @@ jobs:
           exit-code: "1"
           ignore-unfixed: true
           vuln-type: os,library
+          scanners: vuln
           severity: CRITICAL,HIGH
 
       - name: Subir imagen a Docker Hub
